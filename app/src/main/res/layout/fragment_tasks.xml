@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="ru.easycode.hfa_first.TasksViewModel" />
     </data>
 
     <LinearLayout
@@ -17,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Enter a task name" />
+            android:hint="Enter a task name"
+            android:text="@={viewModel.newTaskName}" />
 
         <Button
             android:id="@+id/save_button"
@@ -25,13 +29,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Save task"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:onClick="@{() -> viewModel.addTask()}" />
 
         <TextView
             android:id="@+id/tasks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.tasksString}" />
 
     </LinearLayout>
 
