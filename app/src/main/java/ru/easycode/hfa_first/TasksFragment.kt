@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ru.easycode.hfa_first.databinding.FragmentTasksBinding
 
@@ -30,6 +31,14 @@ class TasksFragment : Fragment() {
         ).get(TasksViewModel::class.java)// инстанс ВМ с аргументом в конструкторе
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        val adapter = TaskItemAdapter()
+        binding.tasksList.adapter = adapter
+        viewModel.tasks.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
         return view
     }
 

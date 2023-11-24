@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TasksFragment">
 
     <data>
@@ -32,12 +33,13 @@
             android:layout_marginTop="8dp"
             android:onClick="@{() -> viewModel.addTask()}" />
 
-        <TextView
-            android:id="@+id/tasks"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasks_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{viewModel.tasksString}" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 
