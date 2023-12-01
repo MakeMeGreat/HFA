@@ -9,7 +9,6 @@ import ru.easycode.hfa_first.databinding.TaskItemBinding
 class TaskItemAdapter(val clickListener: (taskId: Long) -> Unit) :
     ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskItemViewHolder =
         TaskItemViewHolder.inflateFrom(parent)
 
