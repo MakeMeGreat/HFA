@@ -13,25 +13,29 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import ru.easycode.hfa_first.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
-    private var _binding: FragmentResultBinding? = null
-    private val binding get() = _binding!!
     lateinit var viewModel: ResultViewModel
     lateinit var viewModelFactory: ResultViewModelFactory
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentResultBinding.inflate(inflater, container, false).apply {
-            composeView.setContent {
+        val result = ResultFragmentArgs.fromBundle(requireArguments()).result
+        viewModelFactory = ResultViewModelFactory(result)
+        viewModel = ViewModelProvider(
+            this@ResultFragment,
+            viewModelFactory
+        ).get(ResultViewModel::class.java)
+        return ComposeView(requireContext()).apply {
+            setContent {
                 MaterialTheme {
                     Surface {
                         view?.let { ResultFragmentContent(view = it, viewModel = viewModel) }
@@ -39,23 +43,8 @@ class ResultFragment : Fragment() {
                 }
             }
         }
-        val view = binding.root
-
-        val result = ResultFragmentArgs.fromBundle(requireArguments()).result
-        viewModelFactory = ResultViewModelFactory(result)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ResultViewModel::class.java)
-        binding.resultViewModel = viewModel
-
-        binding.newGameButton.setOnClickListener {
-            view.findNavController().navigate(R.id.action_resultFragment_to_gameFragment)
-        }
-        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     @Composable
     fun ResultText(result: String) {
